@@ -14,7 +14,9 @@ export class Login extends React.PureComponent {
                 rightComponent={{ icon: "home", color: "#fff" }}
             />
             <Card title="Login">
-                <Text>This is a React Native application!</Text>
+                <Text>
+                    This is a React Native application!
+                </Text>
             </Card>
         </View>
     }

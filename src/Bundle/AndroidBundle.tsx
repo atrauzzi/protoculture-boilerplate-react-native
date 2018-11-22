@@ -1,10 +1,11 @@
 import "es6-symbol/implement";
 import React from "react";
-import { AppRegistry, View } from "react-native";
 import { Bundle } from "protoculture";
-import { ReactNativeServiceProvider } from "../Layer/ProtocultureReactNative/ReactNativeServiceProvider";
+import { ProtocultureReactNative } from "../Layer/ProtocultureReactNative/Component/ProtocultureReactNative";
+import { AppRegistry, View, Text } from "react-native";
 import { name } from "../../app.json";
-import { Loading } from "../Layer/TinkeringRne/Component/Loading";
+import { ReactNativeServiceProvider } from "../Layer/ProtocultureReactNative/ReactNativeServiceProvider";
+import { TinkeringRneServiceProvider } from "../Layer/TinkeringRne/TinkeringRneServiceProvider";
 
 
 export class AndroidBundle extends Bundle {
@@ -15,24 +16,19 @@ export class AndroidBundle extends Bundle {
 
         return [
             ReactNativeServiceProvider,
+            TinkeringRneServiceProvider,
         ];
     }
 }
 
-// // Async init can be upsetting to React Native sometimes, espcially during debugging.
-// AppRegistry.registerComponent(name, () => (props: any) => {
+AppRegistry.registerComponent(name, () => (props: any) => {
 
-//     window.rootTag = props.rootTag;
-
-//     return <View>
-//         <Loading />
-//     </View>
-// });
-
-const bundle = new AndroidBundle();
-
-AppRegistry.registerRunnable(name, bundle.run.bind(bundle));
-
-// bundle
-//     .run()
-//     .catch((error) => { throw error });
+    return <ProtocultureReactNative
+        bundleType={AndroidBundle}
+        rootTag={props.rootTag}
+    >
+        <View>
+            <Text>Loading Android...</Text>
+        </View>
+    </ProtocultureReactNative>
+});

@@ -1,7 +1,8 @@
-import { App } from "protoculture";
+import React from "react";
+import { App, Bundle } from "protoculture";
 import { AppRegistry } from "react-native";
-import { Login } from "../TinkeringRne/Component/Login";
-import { name } from "../../../app.json";
+import { reactNativeSymbols } from "./ReactNativeServiceProvider";
+import { BundleProvider } from "./Component/ReactInject";
 
 
 export class ReactNativeApp implements App {
@@ -10,19 +11,27 @@ export class ReactNativeApp implements App {
 
     public working = true;
 
-    public bundle = null;
+    public bundle: Bundle | null = null;
 
     public async run() {
 
-        // console.log(window.rootTag);
-        // console.log("unmounting");
+        if (this.bundle) {
 
-        // AppRegistry.unmountApplicationComponentAtRootTag(window.rootTag);
-        // console.log("unmounted");
+            const rootTag = this.bundle.container.get<number>(reactNativeSymbols.RootTag);
+            const rootComponent = this.bundle.container.get<React.ComponentClass>(reactNativeSymbols.RootComponent);
 
-        AppRegistry.registerComponent(name, () => () => <Login />);
-        AppRegistry.runApplication(name, {});
-        // AppRegistry.runApplication(this.name, {});
-        // console.log("run");
+            await this.runApplication(rootTag, rootComponent);
+        }
+    }
+
+    private async runApplication(rootTag: number, RootComponent: React.ComponentClass) {
+
+        AppRegistry.registerComponent(this.name, () => (props: any) => {
+            
+            return <BundleProvider value={this.bundle}>
+                <RootComponent {...props} />
+            </BundleProvider>
+        });
+        AppRegistry.runApplication(this.name, { rootTag });
     }
 }
