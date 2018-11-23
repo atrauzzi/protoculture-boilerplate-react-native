@@ -7,6 +7,8 @@ export class ReactNativeServiceProvider extends ServiceProvider {
     
     public async boot() {
 
+        console.disableYellowBox = true;
+
         this.bindApp(ReactNativeApp);
     }
 }

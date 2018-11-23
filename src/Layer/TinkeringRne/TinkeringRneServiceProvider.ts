@@ -9,14 +9,12 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
     public async boot() {
 
         this.configureTinkeringNavigation({
-            headerMode: 'none',
+            initialRouteName: "login",
+            headerMode: "none",
         });
 
         this.configureTinkeringRoutes({
-            Login: {
-                screen: Login,
-            },
-            LoginAgain: {
+            "login": {
                 screen: Login,
             },
         });

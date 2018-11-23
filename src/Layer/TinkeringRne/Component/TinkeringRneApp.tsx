@@ -22,11 +22,11 @@ class TinkeringRneAppComponent extends React.PureComponent {
                 const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
 
                 const NavigationContainer = createAppContainer(createStackNavigator(
-                    ...routes,
+                    routes.reduce((previous, current) => ({ ...previous, ...current }), {}),
                     configuration
                 ));
 
-                return <NavigationContainer />;
+                return <NavigationContainer />
             }
         }
         </BundleConsumer>
