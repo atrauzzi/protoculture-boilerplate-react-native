@@ -15,6 +15,8 @@ export class ReactNativeApp implements App {
 
     public async run() {
 
+        console.disableYellowBox = true;
+
         if (this.bundle) {
 
             const rootTag = this.bundle.container.get<number>(reactNativeSymbols.RootTag);
