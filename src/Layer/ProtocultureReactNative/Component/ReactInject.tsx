@@ -7,7 +7,6 @@ const { Provider , Consumer } = React.createContext<Bundle | null>(null);
 export const BundleProvider = Provider;
 export const BundleConsumer = Consumer;
 
-
 export function reactInject<InjectedType, InjectionProp extends (string | number | symbol), Props extends {[key in InjectionProp]: InjectedType}>(symbol: symbol, injectionPropOrComponentType: InjectionProp | React.ComponentType<Props>, componentType: React.ComponentType<Props> = null) {
 
     const injectionProp = componentType

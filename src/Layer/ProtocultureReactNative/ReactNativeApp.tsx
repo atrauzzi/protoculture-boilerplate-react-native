@@ -32,6 +32,7 @@ export class ReactNativeApp implements App {
                 <RootComponent {...props} />
             </BundleProvider>
         });
+
         AppRegistry.runApplication(this.name, { rootTag });
     }
 }
