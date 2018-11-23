@@ -8,7 +8,10 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        this.configureTinkeringNavigation({});
+        this.configureTinkeringNavigation({
+            headerMode: 'none',
+        });
+
         this.configureTinkeringRoutes({
             Login: {
                 screen: Login,
