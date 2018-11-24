@@ -23,7 +23,7 @@ export function reactInject<InjectedType, InjectionProp extends (string | number
 
                 if (!bundle) {
 
-                    throw new Error("This portion of the React component graph is built using protoculture-react.  Please be sure to wrap it with a `BundleProvider`.");
+                    throw new Error("This portion of the React component graph is built using protoculture-react-native.  Please be sure to wrap it with a `BundleProvider`.");
                 }
 
                 return <Component
