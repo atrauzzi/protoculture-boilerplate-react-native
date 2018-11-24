@@ -2,7 +2,7 @@ import React from "react";
 import { Card, FormLabel, FormInput, FormValidationMessage, Button } from "react-native-elements";
 
 
-export class Login extends React.PureComponent {
+class LoginComponent extends React.PureComponent {
 
     public render() {
 
@@ -26,6 +26,8 @@ export class Login extends React.PureComponent {
 
     private async doLogin() {
 
-
+        
     }
 }
+
+export const Login = LoginComponent;

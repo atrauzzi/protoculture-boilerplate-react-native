@@ -54,3 +54,4 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+android/app/src/main/assets/appcenter-config.json

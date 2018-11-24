@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">React Native Tinkering</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ALWAYS_SEND</string>
 </resources>

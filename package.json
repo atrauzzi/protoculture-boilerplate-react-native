@@ -9,6 +9,9 @@
   "dependencies": {
     "@babel/preset-typescript": "^7.1.0",
     "@types/react-native": "^0.57.10",
+    "appcenter": "^1.10.0",
+    "appcenter-analytics": "^1.10.0",
+    "appcenter-crashes": "^1.10.0",
     "es6-symbol": "^3.1.1",
     "protoculture": "^2.0.92",
     "react": "16.6.1",
