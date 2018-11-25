@@ -719,6 +719,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/react@^16.7.7":
+  version "16.7.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.7.tgz#1e5e23e7dd922968ed4b484cdec00a5402c9f31b"
+  integrity sha512-dJiq7CKxD1XJ/GqmbnsQisFnzG4z5lntKBw9X9qeSrguxFbrrhGa8cK9s0ONBp8wL1EfGfofEDVhjen26U46pw==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
 "@types/yup@^0.26.1":
   version "0.26.2"
   resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.26.2.tgz#823f43bfb29cb4fd2af395c3eb8f30929f4e9d53"
@@ -5205,6 +5213,11 @@ react-native-gesture-handler@^1.0.0, react-native-gesture-handler@^1.0.9:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
+
+react-native-google-signin@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-google-signin/-/react-native-google-signin-1.0.1.tgz#1736f08b921f9ae30d66b86887ef086aee767c99"
+  integrity sha512-ZuSNh/1qPXh+LNtxYGRDpj1oDUQ3ikOVvw5dqyOhZT0KoZcSz6WePwIYVq1BBLkZg4PMkzNpbOSmYChytf6r+Q==
 
 react-native-safe-area-view@^0.11.0:
   version "0.11.0"

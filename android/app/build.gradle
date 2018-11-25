@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -137,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-google-signin')
     compile project(':react-native-fbsdk')
     compile project(':appcenter-analytics')
     compile project(':appcenter')

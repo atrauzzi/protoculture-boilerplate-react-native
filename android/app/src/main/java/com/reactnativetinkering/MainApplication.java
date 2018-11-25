@@ -3,6 +3,7 @@ package com.reactnativetinkering;
 import android.app.Application;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
 import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
@@ -35,12 +36,13 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
-            new AppCenterReactNativePackage(MainApplication.this),
-            new RNGestureHandlerPackage(),
-            new VectorIconsPackage(),
-            new FBSDKPackage(mCallbackManager)
+        new MainReactPackage(),
+        new RNGoogleSigninPackage(),
+        new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
+        new AppCenterReactNativePackage(MainApplication.this),
+        new RNGestureHandlerPackage(),
+        new VectorIconsPackage(),
+        new FBSDKPackage(mCallbackManager)
       );
     }
 
