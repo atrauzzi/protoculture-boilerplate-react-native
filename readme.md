@@ -30,13 +30,13 @@ keytool -exportcert -keystore ~\.android\debug.keystore -list -v
 $sha1Bytes = [System.Text.Encoding]::Unicode.GetBytes($Text)
 $sha1Hash = [Convert]::ToBase64String($sha1Bytes)
 
-# https://stackoverflow.com/a/41293760/128991
-# Delete the last 5 characters and add an `=` at the end of this output to get the Facebook hash.
-keytool -exportcert -alias androiddebugkey -keystore ~\.android\debug.keystore | C:\Program` Files\OpenSSL\bin\openssl sha1 -binary | C:\Program` Files\OpenSSL\bin\openssl base64
+# To convert 32 to 28 characters...Delete the last 5 characters and add an `=` at the end of this output to get the Facebook hash. (https://stackoverflow.com/a/41293760/128991)
+keytool -exportcert -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | C:\Program` Files\OpenSSL\bin\openssl sha1 -binary | C:\Program` Files\OpenSSL\bin\openssl base64
+
 ```
 
 ```javascript
-// To convert 32 to 28 characters...
+// 
 btoa(atob("HASH_HERE").slice(0, -2));
 ```
 

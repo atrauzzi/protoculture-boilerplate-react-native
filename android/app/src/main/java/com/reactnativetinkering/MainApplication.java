@@ -3,6 +3,7 @@ package com.reactnativetinkering;
 import android.app.Application;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
@@ -17,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
-
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -37,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
         new RNGoogleSigninPackage(),
         new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
         new AppCenterReactNativePackage(MainApplication.this),
