@@ -1,7 +1,9 @@
 import React from "react";
-import { Card, FormLabel, FormInput, Button, SocialIcon } from "react-native-elements";
+import { Card, Button, SocialIcon } from "react-native-elements";
+import { Form } from "protoculture-react-form";
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { GoogleSignin } from "react-native-google-signin";
+import { FormInput } from "../../ProtocultureReactFormRne/Component/FormInput";
 
 
 class LoginComponent extends React.PureComponent {
@@ -12,18 +14,30 @@ class LoginComponent extends React.PureComponent {
 
             <Card title="Login">
 
-                <FormLabel>Username or Email</FormLabel>
-                <FormInput />
+                <Form
+                    data={({
+                        usernameemail: "stuff",
+                        password: "stuff",
+                    })}
+                    onSubmit={this.doArtMoiLogin}
+                    onInvalid={() => alert("incalid!")}
+                >
+                    <FormInput 
+                        name="usernameemail"
+                        label="Username or Email"
+                    />
 
-                <FormLabel>Password</FormLabel>
-                <FormInput 
-                    secureTextEntry 
-                />
+                    <FormInput 
+                        secureTextEntry 
+                        name="password"
+                        label="Password"
+                    />
 
-                <Button
-                    title="Go"
-                    onPress={this.doArtMoiLogin}
-                />
+                    <Button
+                        title="Go"
+                        onPress={() => {}}
+                    />
+                </Form>
 
             </Card>
 
@@ -48,9 +62,9 @@ class LoginComponent extends React.PureComponent {
         </>
     }
 
-    private doArtMoiLogin = async () => {
+    private doArtMoiLogin = async (stuff: any) => {
 
-        
+        console.log("heck!", stuff);
     }
 
     private doGoogleLogin = async () => {

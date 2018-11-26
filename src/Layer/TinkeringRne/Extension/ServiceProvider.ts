@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { ServiceProvider } from "protoculture";
-import { tinkeringRneSymbols } from "../TinkeringRneServiceProvider";
+import { tinkeringRneSymbols } from "../Symbols";
 
 
 declare module "protoculture/lib/ServiceProvider" {

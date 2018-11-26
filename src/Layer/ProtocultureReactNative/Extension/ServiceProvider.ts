@@ -7,7 +7,7 @@ declare module "protoculture/lib/ServiceProvider" {
 
     export interface ServiceProvider {
 
-        configureReactNativeRoot(rootComponent: React.ComponentClass): void;
+        configureReactNativeRoot(rootComponent: React.ReactType): void;
     }
 }
 

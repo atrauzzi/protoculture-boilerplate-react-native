@@ -1,36 +1,64 @@
 import _ from "lodash";
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { BundleConsumer } from "../../ProtocultureReactNative/Component/ReactInject";
-import { tinkeringRneSymbols } from "../TinkeringRneServiceProvider";
+import { BundleConsumer, reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
+import { tinkeringRneSymbols } from "../Symbols";
+import { AutoWrapperProvider, AutoWrapperConfiguration } from "auto-wrapper";
+import { TinkeringRneAppState } from "../Domain/TinkeringRneAppState";
+import { TinkeringRneAppService } from "../TinkeringRneAppService";
 
 
-class TinkeringRneAppComponent extends React.PureComponent {
+interface ComponentProps {
+
+    service: TinkeringRneAppService;
+}
+
+export type Props = ComponentProps;
+
+class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAppState> {
+
+    public constructor(props: any) {
+
+        super(props);
+
+        this.state = {
+            autoWrapperConfiguration: null,
+        };
+    }
+
+    public async componentDidMount() {
+
+        this.setState(await this.props.service.calculateState());
+    }
 
     public render() {
 
-        return <BundleConsumer>
-        {
-            (bundle) => {
+        return (
+            <AutoWrapperProvider value={this.state.autoWrapperConfiguration || {} as any as AutoWrapperConfiguration}>
+            <BundleConsumer>
+            {
+                (bundle) => {
 
-                if (!bundle) {
+                    if (!bundle) {
 
-                    return null;
+                        return null;
+                    }
+
+                    const configuration = bundle.container.get(tinkeringRneSymbols.Configuration);
+                    const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
+
+                    const NavigationContainer = createAppContainer(createStackNavigator(
+                        routes.reduce((previous, current) => ({ ...previous, ...current }), {}),
+                        configuration
+                    ));
+
+                    return <NavigationContainer />
                 }
-
-                const configuration = bundle.container.get(tinkeringRneSymbols.Configuration);
-                const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
-
-                const NavigationContainer = createAppContainer(createStackNavigator(
-                    routes.reduce((previous, current) => ({ ...previous, ...current }), {}),
-                    configuration
-                ));
-
-                return <NavigationContainer />
             }
-        }
-        </BundleConsumer>
+            </BundleConsumer>
+            </AutoWrapperProvider>
+        )
     }
 }
 
-export const TinkeringRneApp = TinkeringRneAppComponent;
+export const TinkeringRneApp = reactInject(tinkeringRneSymbols.AppService, "service", TinkeringRneAppComponent);

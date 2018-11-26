@@ -16,6 +16,7 @@
     "appcenter-crashes": "^1.10.0",
     "es6-symbol": "^3.1.1",
     "protoculture": "^2.0.92",
+    "protoculture-react-form": "^1.0.11",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-elements": "^0.19.1",
