@@ -17,13 +17,19 @@ class FormInputWrapperComponent extends React.PureComponent<Props> {
 
         const formInputElement = this.props.children;
         const fieldName = formInputElement.props.name;
-        const validationErrors = _.get(this.props.validationErrors, `${this.props.index}.${fieldName}`);
+        const validationError = _.get(this.props.validationErrors, `${this.props.index}.${fieldName}`);
 
         return React.cloneElement<FormInputProps>(formInputElement, {
             defaultValue: this.props.data[fieldName],
-            // validationMessage: validationErrors,
+            validationMessage: validationError ? validationError.message : null,
+            onChangeText: (value) => this.changed(this.props.index, fieldName, value),
         });
     }
+
+    public changed = async (index: number, field: string, value: string) => {
+
+        this.props.form.setFieldValue(this.props.index, field, value);
+    };
 }
 
 export const FormInputWrapper = withForm(FormInputWrapperComponent);

@@ -6,7 +6,7 @@ export interface ComponentProps {
 
     name: string;
     label?: string;
-    validationMessage?: string;
+    validationMessage?: string | null;
 }
 
 export type Props = ComponentProps & RneFormInputProps;

@@ -1,9 +1,11 @@
 import React from "react";
+import * as Yup from "yup";
 import { Card, Button, SocialIcon } from "react-native-elements";
 import { Form } from "protoculture-react-form";
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { GoogleSignin } from "react-native-google-signin";
 import { FormInput } from "../../ProtocultureReactFormRne/Component/FormInput";
+import { SubmitButton } from "../../ProtocultureReactFormRne/Component/SubmitButton";
 
 
 class LoginComponent extends React.PureComponent {
@@ -15,27 +17,31 @@ class LoginComponent extends React.PureComponent {
             <Card title="Login">
 
                 <Form
-                    data={({
-                        usernameemail: "stuff",
-                        password: "stuff",
+                    schema={Yup.object({
+                        usernameoremail: Yup.string().min(3, "Please enter at least 3 characters."),
+                        password: Yup.string().min(6, "Please enter at least 6 characters."),
                     })}
-                    onSubmit={this.doArtMoiLogin}
-                    onInvalid={() => alert("incalid!")}
+                    data={({
+                        usernameoremail: "",
+                        password: "",
+                    })}
+                    onSubmit={this.doPasswordLogin}
                 >
                     <FormInput 
-                        name="usernameemail"
+                        name="usernameoremail"
                         label="Username or Email"
+                        placeholder="Enter your username or email address."
                     />
 
                     <FormInput 
                         secureTextEntry 
                         name="password"
                         label="Password"
+                        placeholder="Enter your password."
                     />
 
-                    <Button
+                    <SubmitButton
                         title="Go"
-                        onPress={() => {}}
                     />
                 </Form>
 
@@ -62,7 +68,7 @@ class LoginComponent extends React.PureComponent {
         </>
     }
 
-    private doArtMoiLogin = async (stuff: any) => {
+    private doPasswordLogin = async (stuff: any) => {
 
         console.log("heck!", stuff);
     }
