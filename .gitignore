@@ -60,3 +60,4 @@ buck-out/
 android/app/src/main/assets/appcenter-config.json
 android/app/src/main/res/values/env.xml
 android/app/google-services.json
+.env

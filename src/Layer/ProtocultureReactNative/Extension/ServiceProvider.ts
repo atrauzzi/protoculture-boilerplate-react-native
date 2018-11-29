@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { ServiceProvider } from "protoculture";
-import { reactNativeSymbols } from "../ReactNativeServiceProvider";
+import { reactNativeSymbols } from "../Symbols";
 
 
 declare module "protoculture/lib/ServiceProvider" {

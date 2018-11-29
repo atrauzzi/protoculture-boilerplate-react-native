@@ -19,6 +19,7 @@
     "protoculture-react-form": "^1.0.11",
     "react": "16.6.1",
     "react-native": "0.57.5",
+    "react-native-config": "^0.11.6",
     "react-native-elements": "^0.19.1",
     "react-native-fbsdk": "^0.8.0",
     "react-native-gesture-handler": "^1.0.9",

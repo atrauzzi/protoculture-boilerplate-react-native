@@ -1,14 +1,23 @@
 import React from "react";
 import * as Yup from "yup";
-import { Card, Button, SocialIcon } from "react-native-elements";
+import { Card, SocialIcon } from "react-native-elements";
 import { Form } from "protoculture-react-form";
-import { LoginManager, AccessToken } from "react-native-fbsdk";
-import { GoogleSignin } from "react-native-google-signin";
 import { FormInput } from "../../ProtocultureReactFormRne/Component/FormInput";
 import { SubmitButton } from "../../ProtocultureReactFormRne/Component/SubmitButton";
+import { reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
+import { tinkeringRneSymbols } from "../Symbols";
+import { TinkeringRneAppService } from "../TinkeringRneAppService";
+import { PasswordLogin } from "../Domain/PasswordLogin";
 
 
-class LoginComponent extends React.PureComponent {
+interface ComponentProps {
+
+    service: TinkeringRneAppService;
+}
+
+export type Props = ComponentProps;
+
+class LoginComponent extends React.PureComponent<Props> {
 
     public render() {
 
@@ -24,7 +33,7 @@ class LoginComponent extends React.PureComponent {
                     data={({
                         usernameoremail: "",
                         password: "",
-                    })}
+                    } as PasswordLogin)}
                     onSubmit={this.doPasswordLogin}
                 >
                     <FormInput 
@@ -68,43 +77,24 @@ class LoginComponent extends React.PureComponent {
         </>
     }
 
-    private doPasswordLogin = async (stuff: any) => {
-
-        console.log("heck!", stuff);
+    private doPasswordLogin = async (passwordLogin: PasswordLogin) => {
+       
+        await this.props.service.login(passwordLogin);
     }
 
     private doGoogleLogin = async () => {
 
-        GoogleSignin.configure();
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
+        const googleLogin = await this.props.service.loginGoogle();
 
-        console.log(userInfo);
+        console.log(googleLogin);
     };
 
     private doFacebookLogin = async () => {
 
-        if (AccessToken.getCurrentAccessToken()) {
+       const facebookLogin = await this.props.service.loginFacebook();
 
-            await LoginManager.logOut();
-        }
-
-        const authorization = await LoginManager.logInWithPublishPermissions([]);
-
-        if (authorization.error) {
-
-            throw authorization.error;
-        }
-
-        if (authorization.isCancelled) {
-
-            // pass
-        } 
-        else {
-
-            console.log(await AccessToken.getCurrentAccessToken());
-        }
+       console.log(facebookLogin);
     };
 }
 
-export const Login = LoginComponent;
+export const Login = reactInject(tinkeringRneSymbols.AppService, "service", LoginComponent);

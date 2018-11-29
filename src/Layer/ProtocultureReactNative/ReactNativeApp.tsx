@@ -1,7 +1,7 @@
 import React from "react";
 import { App, Bundle } from "protoculture";
 import { AppRegistry } from "react-native";
-import { reactNativeSymbols } from "./ReactNativeServiceProvider";
+import { reactNativeSymbols } from "./Symbols";
 import { BundleProvider } from "./Component/ReactInject";
 
 

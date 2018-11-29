@@ -1,7 +1,7 @@
 import React from "react";
 import { Constructor } from "react-native";
 import { Bundle } from "protoculture";
-import { reactNativeSymbols } from "../ReactNativeServiceProvider";
+import { reactNativeSymbols } from "../Symbols";
 
 
 interface ComponentProps {
@@ -28,7 +28,7 @@ class ProtocultureReactNativeComponent extends React.PureComponent<Props, State>
         };
     }
 
-    public async componentDidMount() {
+    public componentDidMount() {
 
         this.state.bundle.run();
 
