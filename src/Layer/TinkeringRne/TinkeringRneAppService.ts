@@ -1,6 +1,5 @@
-import Config from "react-native-config";
 import { TinkeringRneAppState } from "./Domain/TinkeringRneAppState";
-import { ApiConnection } from "protoculture";
+import { ApiConnections } from "protoculture";
 import { AutoWrapperConfiguration } from "auto-wrapper";
 import { PasswordLogin } from "./Domain/PasswordLogin";
 import { GoogleSignin } from "react-native-google-signin";
@@ -9,15 +8,15 @@ import { AccessToken, LoginManager } from "react-native-fbsdk";
 
 export class TinkeringRneAppService {
     
-    private apiConnection: ApiConnection<any, any>;
+    private apiConnections: ApiConnections;
     private autoWrapperConfiguration: AutoWrapperConfiguration;
 
     public constructor(
         autoWrapperConfiguration: AutoWrapperConfiguration,
-        apiConnection: ApiConnection<any, any>
+        apiConnections: ApiConnections
     ) {
         this.autoWrapperConfiguration = autoWrapperConfiguration;
-        this.apiConnection = apiConnection;
+        this.apiConnections = apiConnections;
     }
 
     public async calculateState(): Promise<TinkeringRneAppState> {
@@ -29,16 +28,16 @@ export class TinkeringRneAppService {
 
     public async login(passwordLogin: PasswordLogin) {
 
-        console.log(this.apiConnection);
-
         try {
 
-            this.apiConnection.call("authenticate", {
-                data: {
-                    username: passwordLogin.usernameoremail,
-                    password: passwordLogin.password,
-                },
-            });
+            this.apiConnections
+                .connection("oauth")
+                .call("password-grant", {
+                    data: {
+                        username: passwordLogin.usernameoremail,
+                        password: passwordLogin.password,
+                    },
+                });
         }
         catch (error) {
 

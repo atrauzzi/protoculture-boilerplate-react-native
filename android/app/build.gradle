@@ -1,5 +1,10 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
+
+// This plugin is used to statically generate string resources from JSON.
+// We handle this through .env instead and have it mapped over in strings.xml
+// see: https://developers.google.com/android/guides/google-services-plugin
+// apply plugin: 'com.google.gms.google-services'
+
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
