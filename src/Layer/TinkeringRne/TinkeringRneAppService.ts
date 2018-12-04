@@ -1,10 +1,16 @@
-import { TinkeringRneAppState } from "./Domain/TinkeringRneAppState";
-import { ApiConnections } from "protoculture";
+import moment from "moment";
+import { ApiConnections, Oauth2Response } from "protoculture";
 import { AutoWrapperConfiguration } from "auto-wrapper";
 import { PasswordLogin } from "./Domain/PasswordLogin";
 import { GoogleSignin } from "react-native-google-signin";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
+import { Oauth2TokenType } from "protoculture/lib/Data/Authorization/Oauth2";
 
+
+export interface TinkeringRneAppState {
+
+    autoWrapperConfiguration: AutoWrapperConfiguration | null;
+}
 
 export class TinkeringRneAppService {
     
@@ -30,14 +36,31 @@ export class TinkeringRneAppService {
 
         try {
 
-            this.apiConnections
+            const response = await this.apiConnections
                 .connection("oauth")
-                .call("password-grant", {
+                .call<Oauth2Response>("password-grant", {
                     data: {
                         username: passwordLogin.usernameoremail,
                         password: passwordLogin.password,
                     },
                 });
+
+            this.apiConnections
+                .connection("api")
+                .setAuthorization("oauth2", {
+                    accessToken: {
+                        type: Oauth2TokenType.Bearer,
+                        expiresAt: moment().add(response.expires_in),
+                        expiresIn: response.expires_in,
+                        value: response.access_token,
+                    },
+                });
+
+            const identity = await this.apiConnections
+                .connection("api")
+                .call("identity");
+
+            console.log("holyshityeaaaayayayayayya!!!!", identity);
         }
         catch (error) {
 
@@ -74,4 +97,12 @@ export class TinkeringRneAppService {
 
         return await AccessToken.getCurrentAccessToken();
     };
+
+    private setAccessToken() {
+
+    }
+
+    private setRefreshToken() {
+        
+    }
 }

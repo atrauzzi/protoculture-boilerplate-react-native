@@ -24,12 +24,12 @@ export const oauthConfiguration = {
 };
 
 export const apiConfiguration = {
-
     routes: {
         "identity": {
             name: "identity",
             method: Method.GET,
             path: "identity",
+            authorizationType: "oauth2",
         },
     },
 };

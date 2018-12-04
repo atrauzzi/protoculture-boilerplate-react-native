@@ -9,7 +9,7 @@ import { protocultureReactFormRneSymbols } from "../ProtocultureReactFormRne/Pro
 import { AutoWrapperConfiguration, WrappingConfiguration } from "auto-wrapper";
 import { reactNativeSymbols } from "../ProtocultureReactNative/Symbols";
 import { NativeConfig } from "react-native-config";
-import { apiConfiguration, oauthConfiguration } from "./Domain/ApiConfiguration";
+import { apiConfiguration, oauthConfiguration } from "./ApiConfiguration";
 
 
 export class TinkeringRneServiceProvider extends ServiceProvider {
@@ -29,6 +29,8 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
 
         this.configureReactNativeRoot(TinkeringRneApp);
 
+        this.configureApiConnection("oauth", oauthConfiguration);
+        this.configureApiConnection("api", apiConfiguration);
         this.configureApiConnection((context) => {
             
             const configuration = context.container.get<NativeConfig>(reactNativeSymbols.Configuration);
@@ -50,9 +52,6 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
                 },
             };
         });
-
-        this.configureApiConnection("oauth", oauthConfiguration);
-        this.configureApiConnection("api", apiConfiguration);
 
         this.bundle.container
             .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)
