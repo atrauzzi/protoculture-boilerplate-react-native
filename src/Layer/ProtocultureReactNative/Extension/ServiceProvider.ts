@@ -11,7 +11,7 @@ declare module "protoculture/lib/ServiceProvider" {
     }
 }
 
-ServiceProvider.prototype.configureReactNativeRoot = function (rootComponent: React.ComponentClass) {
+ServiceProvider.prototype.configureReactNativeRoot = function (this: ServiceProvider, rootComponent: React.ComponentClass) {
 
     this.bundle.container
         .bind<React.ComponentClass>(reactNativeSymbols.RootComponent)

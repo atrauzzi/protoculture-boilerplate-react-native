@@ -16,10 +16,23 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        this.configureTinkeringNavigation({
-            initialRouteName: "login",
-            headerMode: "none",
-        });
+        this.configureReactNativeRoot(TinkeringRneApp);
+        this.configureRouting();
+        this.configureConnections();
+
+        this.bundle.container
+            .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)
+            .toDynamicValue((context) => ({
+                wrappers: context.container.getAll<WrappingConfiguration>(protocultureReactFormRneSymbols.WrappingConfiguration),
+            }))
+
+        this.makeInjectable(TinkeringRneAppService);
+        this.bindConstructor(tinkeringRneSymbols.AppService, TinkeringRneAppService);
+        this.bindConstructorParameter(tinkeringRneSymbols.AutoWrapperConfiguration, TinkeringRneAppService, 0);
+        this.bindConstructorParameter(protocultureSymbols.ApiConnections, TinkeringRneAppService, 1);
+    }
+
+    private configureRouting() {
 
         this.configureTinkeringRoutes({
             "login": {
@@ -27,7 +40,13 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
             },
         });
 
-        this.configureReactNativeRoot(TinkeringRneApp);
+        this.configureTinkeringNavigation({
+            initialRouteName: "login",
+            headerMode: "none",
+        });
+    }
+
+    private configureConnections() {
 
         this.configureApiConnection("oauth", oauthConfiguration);
         this.configureApiConnection("api", apiConfiguration);
@@ -52,18 +71,5 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
                 },
             };
         });
-
-        this.bundle.container
-            .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)
-            .toDynamicValue((context) => ({
-                wrappers: [
-                    ...context.container.getAll<WrappingConfiguration>(protocultureReactFormRneSymbols.WrappingConfiguration)
-                ],
-            }))
-
-        this.makeInjectable(TinkeringRneAppService);
-        this.bindConstructor(tinkeringRneSymbols.AppService, TinkeringRneAppService);
-        this.bindConstructorParameter(tinkeringRneSymbols.AutoWrapperConfiguration, TinkeringRneAppService, 0);
-        this.bindConstructorParameter(protocultureSymbols.ApiConnections, TinkeringRneAppService, 1);
     }
 }
