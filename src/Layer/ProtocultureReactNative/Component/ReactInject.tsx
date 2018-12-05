@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import { Bundle } from "protoculture";
 
@@ -9,16 +10,19 @@ export const BundleConsumer = Consumer;
 
 export function reactInject<
     InjectedType, 
-    InjectionProp extends (string | number | symbol), 
-    Props extends {[key in InjectionProp]: InjectedType}
+    InjectionProp extends (string | number | symbol)
 >
-(symbol: symbol, injectionPropOrComponentType: InjectionProp | React.ComponentType<Props>, componentType: React.ComponentType<Props> | null = null) {
+(
+    symbol: symbol, 
+    injectionPropOrComponentType: InjectionProp | React.ComponentType<any>, 
+    componentType: React.ComponentType<any> | null = null
+) {
 
     const injectionProp = componentType
         ? injectionPropOrComponentType as string
-        : symbol.toString().slice(7, -1);
+        : _.camelCase(symbol.toString().slice(7, -1));
 
-    const Component = componentType || injectionPropOrComponentType as React.ComponentType<Props>;
+    const Component = componentType || injectionPropOrComponentType as React.ComponentType<any>;
 
     return function ComponentWithInjection(props: any) {
 

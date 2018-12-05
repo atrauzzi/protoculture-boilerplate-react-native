@@ -8,16 +8,22 @@ import { reactInject } from "../../ProtocultureReactNative/Component/ReactInject
 import { tinkeringRneSymbols } from "../Symbols";
 import { TinkeringRneAppService } from "../TinkeringRneAppService";
 import { PasswordLogin } from "../Domain/PasswordLogin";
+import { withEventBus, UsesEventBus } from "../../ProtocultureReactNative/Component/WithEventBus";
 
 
 interface ComponentProps {
 
-    service: TinkeringRneAppService;
+    tinkeringRneAppService: TinkeringRneAppService;
 }
 
-export type Props = ComponentProps;
+export type Props = ComponentProps & UsesEventBus;
 
 class LoginComponent extends React.PureComponent<Props> {
+
+    public componentDidMount() {
+
+        
+    }
 
     public render() {
 
@@ -79,22 +85,22 @@ class LoginComponent extends React.PureComponent<Props> {
 
     private doPasswordLogin = async (passwordLogin: PasswordLogin) => {
        
-        await this.props.service.login(passwordLogin);
+        await this.props.tinkeringRneAppService.login(passwordLogin);
     }
 
     private doGoogleLogin = async () => {
 
-        const googleLogin = await this.props.service.loginGoogle();
+        const googleLogin = await this.props.tinkeringRneAppService.loginGoogle();
 
         console.log(googleLogin);
     };
 
     private doFacebookLogin = async () => {
 
-       const facebookLogin = await this.props.service.loginFacebook();
+       const facebookLogin = await this.props.tinkeringRneAppService.loginFacebook();
 
        console.log(facebookLogin);
     };
 }
 
-export const Login = reactInject(tinkeringRneSymbols.AppService, "service", LoginComponent);
+export const Login = reactInject(tinkeringRneSymbols.AppService, withEventBus(LoginComponent));

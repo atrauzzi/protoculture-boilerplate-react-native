@@ -1,4 +1,5 @@
 import moment from "moment";
+import mitt from "mitt";
 import { ApiConnections, Oauth2Response } from "protoculture";
 import { AutoWrapperConfiguration } from "auto-wrapper";
 import { PasswordLogin } from "./Domain/PasswordLogin";
@@ -16,13 +17,16 @@ export class TinkeringRneAppService {
     
     private apiConnections: ApiConnections;
     private autoWrapperConfiguration: AutoWrapperConfiguration;
+    private eventBus: mitt.Emitter;
 
     public constructor(
         autoWrapperConfiguration: AutoWrapperConfiguration,
-        apiConnections: ApiConnections
+        apiConnections: ApiConnections,
+        eventBus: mitt.Emitter
     ) {
         this.autoWrapperConfiguration = autoWrapperConfiguration;
         this.apiConnections = apiConnections;
+        this.eventBus = eventBus;
     }
 
     public async calculateState(): Promise<TinkeringRneAppState> {
@@ -60,7 +64,7 @@ export class TinkeringRneAppService {
                 .connection("api")
                 .call("identity");
 
-            console.log("holyshityeaaaayayayayayya!!!!", identity);
+            this.eventBus.emit("session.created", identity);
         }
         catch (error) {
 
@@ -97,12 +101,4 @@ export class TinkeringRneAppService {
 
         return await AccessToken.getCurrentAccessToken();
     };
-
-    private setAccessToken() {
-
-    }
-
-    private setRefreshToken() {
-        
-    }
 }
