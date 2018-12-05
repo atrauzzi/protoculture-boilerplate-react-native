@@ -1,39 +1,23 @@
-import moment from "moment";
 import mitt from "mitt";
+import moment from "moment";
 import { ApiConnections, Oauth2Response } from "protoculture";
-import { AutoWrapperConfiguration } from "auto-wrapper";
-import { PasswordLogin } from "./Domain/PasswordLogin";
+import { PasswordLogin } from "../Domain/PasswordLogin";
 import { GoogleSignin } from "react-native-google-signin";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import { Oauth2TokenType } from "protoculture/lib/Data/Authorization/Oauth2";
 
 
-export interface TinkeringRneAppState {
+export class AuthenticationService {
 
-    autoWrapperConfiguration: AutoWrapperConfiguration | null;
-}
-
-export class TinkeringRneAppService {
-    
-    private apiConnections: ApiConnections;
-    private autoWrapperConfiguration: AutoWrapperConfiguration;
     private eventBus: mitt.Emitter;
+    private apiConnections: ApiConnections;
 
     public constructor(
-        autoWrapperConfiguration: AutoWrapperConfiguration,
-        apiConnections: ApiConnections,
-        eventBus: mitt.Emitter
+        eventBus: mitt.Emitter,
+        apiConnections: ApiConnections
     ) {
-        this.autoWrapperConfiguration = autoWrapperConfiguration;
-        this.apiConnections = apiConnections;
         this.eventBus = eventBus;
-    }
-
-    public async calculateState(): Promise<TinkeringRneAppState> {
-
-        return {
-            autoWrapperConfiguration: this.autoWrapperConfiguration,
-        };
+        this.apiConnections = apiConnections;
     }
 
     public async login(passwordLogin: PasswordLogin) {

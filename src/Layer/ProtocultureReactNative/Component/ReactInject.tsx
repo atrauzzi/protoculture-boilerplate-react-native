@@ -10,19 +10,20 @@ export const BundleConsumer = Consumer;
 
 export function reactInject<
     InjectedType, 
-    InjectionProp extends (string | number | symbol)
+    InjectionProp extends (string | number | symbol),
+    Props = any
 >
 (
     symbol: symbol, 
-    injectionPropOrComponentType: InjectionProp | React.ComponentType<any>, 
-    componentType: React.ComponentType<any> | null = null
-) {
+    injectionPropOrComponentType: InjectionProp | React.ComponentType<Props>, 
+    componentType: React.ComponentType<Props> | null = null
+): React.ComponentType<Props> {
 
     const injectionProp = componentType
         ? injectionPropOrComponentType as string
         : _.camelCase(symbol.toString().slice(7, -1));
 
-    const Component = componentType || injectionPropOrComponentType as React.ComponentType<any>;
+    const Component = componentType || injectionPropOrComponentType as React.ComponentType<Props>;
 
     return function ComponentWithInjection(props: any) {
 

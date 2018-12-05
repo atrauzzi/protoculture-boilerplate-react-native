@@ -4,7 +4,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import { BundleConsumer, reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
 import { tinkeringRneSymbols } from "../Symbols";
 import { AutoWrapperProvider, AutoWrapperConfiguration } from "auto-wrapper";
-import { TinkeringRneAppService, TinkeringRneAppState } from "../TinkeringRneAppService";
+import { TinkeringRneAppService, TinkeringRneAppState } from "../Service/TinkeringRneAppService";
 
 
 interface ComponentProps {

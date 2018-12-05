@@ -2,14 +2,15 @@ import "./Extension/ServiceProvider";
 import _ from "lodash";
 import { ServiceProvider, protocultureSymbols } from "protoculture";
 import { TinkeringRneApp } from "./Component/TinkeringRneApp";
-import { Login } from "./Component/Login";
-import { TinkeringRneAppService } from "./TinkeringRneAppService";
+import { TinkeringRneAppService } from "./Service/TinkeringRneAppService";
 import { tinkeringRneSymbols } from "./Symbols";
 import { protocultureReactFormRneSymbols } from "../ProtocultureReactFormRne/ProtocultureReactFormRneServiceProvider";
 import { AutoWrapperConfiguration, WrappingConfiguration } from "auto-wrapper";
 import { reactNativeSymbols } from "../ProtocultureReactNative/Symbols";
 import { NativeConfig } from "react-native-config";
 import { apiConfiguration, oauthConfiguration } from "./ApiConfiguration";
+import { AuthenticationService } from "./Service/AuthenticationService";
+import { Login } from "./Component/Login";
 
 
 export class TinkeringRneServiceProvider extends ServiceProvider {
@@ -19,17 +20,13 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
         this.configureReactNativeRoot(TinkeringRneApp);
         this.configureRouting();
         this.configureConnections();
+        this.configureServices();
 
         this.bundle.container
             .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)
             .toDynamicValue((context) => ({
                 wrappers: context.container.getAll<WrappingConfiguration>(protocultureReactFormRneSymbols.WrappingConfiguration),
-            }))
-
-        this.makeInjectable(TinkeringRneAppService);
-        this.bindConstructor(tinkeringRneSymbols.AppService, TinkeringRneAppService);
-        this.bindConstructorParameter(tinkeringRneSymbols.AutoWrapperConfiguration, TinkeringRneAppService, 0);
-        this.bindConstructorParameter(protocultureSymbols.ApiConnections, TinkeringRneAppService, 1);
+            }));
     }
 
     private configureRouting() {
@@ -71,5 +68,17 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
                 },
             };
         });
+    }
+
+    private configureServices() {
+
+        this.makeInjectable(TinkeringRneAppService);
+        this.bindConstructor(tinkeringRneSymbols.AppService, TinkeringRneAppService);
+        this.bindConstructorParameter(tinkeringRneSymbols.AutoWrapperConfiguration, TinkeringRneAppService, 0);
+
+        this.makeInjectable(AuthenticationService);
+        this.bindConstructor(tinkeringRneSymbols.AuthenticationService, AuthenticationService);
+        this.bindConstructorParameter(protocultureSymbols.EventBus, AuthenticationService, 0);
+        this.bindConstructorParameter(protocultureSymbols.ApiConnections, AuthenticationService, 1);
     }
 }
