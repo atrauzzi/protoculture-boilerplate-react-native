@@ -3,6 +3,7 @@ package com.reactnativetinkering;
 import android.app.Application;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new RNSensitiveInfoPackage(),
             new ReactNativeConfigPackage(),
         new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
         new RNGoogleSigninPackage(),

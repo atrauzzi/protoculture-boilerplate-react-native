@@ -1,10 +1,9 @@
 import mitt from "mitt";
-import moment from "moment";
 import { ApiConnections, Oauth2Response } from "protoculture";
 import { PasswordLogin } from "../Domain/PasswordLogin";
 import { GoogleSignin } from "react-native-google-signin";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { Oauth2TokenType } from "protoculture/lib/Data/Authorization/Oauth2";
+import sensitiveInfo from "react-native-sensitive-info";
 
 
 export class AuthenticationService {
@@ -24,7 +23,7 @@ export class AuthenticationService {
 
         try {
 
-            const response = await this.apiConnections
+            const token = await this.apiConnections
                 .connection("oauth")
                 .call<Oauth2Response>("password-grant", {
                     data: {
@@ -33,22 +32,9 @@ export class AuthenticationService {
                     },
                 });
 
-            this.apiConnections
-                .connection("api")
-                .setAuthorization("oauth2", {
-                    accessToken: {
-                        type: Oauth2TokenType.Bearer,
-                        expiresAt: moment().add(response.expires_in),
-                        expiresIn: response.expires_in,
-                        value: response.access_token,
-                    },
-                });
+            await sensitiveInfo.setItem("oauth2.token", JSON.stringify(token), {});
 
-            const identity = await this.apiConnections
-                .connection("api")
-                .call("identity");
-
-            this.eventBus.emit("session.created", identity);
+            this.eventBus.emit("token.loaded", token);
         }
         catch (error) {
 
@@ -81,8 +67,24 @@ export class AuthenticationService {
         else if (authorization.isCancelled) {
 
             return null;
-        } 
+        }
 
         return await AccessToken.getCurrentAccessToken();
+    };
+
+    public appStarted = async () => {
+
+        const tokenJson = await sensitiveInfo.getItem("oauth2.token", {});
+
+        if (tokenJson) {
+
+            const token = JSON.parse(tokenJson);
+
+            this.eventBus.emit("token.loaded", token);
+        }
+        else {
+
+            this.eventBus.emit("token.missing");
+        }
     };
 }

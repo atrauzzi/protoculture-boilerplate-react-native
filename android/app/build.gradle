@@ -144,6 +144,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sensitive-info')
     compile project(':react-native-config')
     compile project(':appcenter-crashes')
     compile project(':react-native-google-signin')

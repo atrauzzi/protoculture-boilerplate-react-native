@@ -6,4 +6,5 @@ export const tinkeringRneSymbols = {
     Route: Symbol("TinkeringRneRoute"),
     AppService: Symbol("TinkeringRneAppService"),
     AuthenticationService: Symbol("TinkeringRneAuthenticationService"),
+    SessionService: Symbol("TinkeringRneSessionService"),
 };

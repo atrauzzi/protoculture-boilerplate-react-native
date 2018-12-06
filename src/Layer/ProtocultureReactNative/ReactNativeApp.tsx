@@ -13,6 +13,13 @@ export class ReactNativeApp implements App {
 
     public bundle: Bundle | null = null;
 
+    private eventBus: mitt.Emitter;
+
+    public constructor(eventBus: mitt.Emitter) {
+
+        this.eventBus = eventBus;
+    }
+
     public async run() {
 
         console.disableYellowBox = true;
@@ -36,5 +43,7 @@ export class ReactNativeApp implements App {
         });
 
         AppRegistry.runApplication(this.name, { rootTag });
+
+        this.eventBus.emit("app.started");
     }
 }

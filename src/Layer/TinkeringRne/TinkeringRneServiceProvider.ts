@@ -8,9 +8,10 @@ import { protocultureReactFormRneSymbols } from "../ProtocultureReactFormRne/Pro
 import { AutoWrapperConfiguration, WrappingConfiguration } from "auto-wrapper";
 import { reactNativeSymbols } from "../ProtocultureReactNative/Symbols";
 import { NativeConfig } from "react-native-config";
-import { apiConfiguration, oauthConfiguration } from "./ApiConfiguration";
+import { apiConfiguration, oauthConfiguration } from "./Configuration/ApiConfiguration";
 import { AuthenticationService } from "./Service/AuthenticationService";
-import { Login } from "./Component/Login";
+import { routeConfiguration } from "./Configuration/RouteConfiguration";
+import { SessionService } from "./Service/SessionService";
 
 
 export class TinkeringRneServiceProvider extends ServiceProvider {
@@ -22,6 +23,11 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
         this.configureConnections();
         this.configureServices();
 
+        this.configureEventHandler("app.started", tinkeringRneSymbols.AuthenticationService);
+        this.configureEventHandler("token.loaded", tinkeringRneSymbols.SessionService);
+        this.configureEventHandler("token.missing", tinkeringRneSymbols.AppService);
+        this.configureEventHandler("identity.loaded", tinkeringRneSymbols.AppService);
+
         this.bundle.container
             .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)
             .toDynamicValue((context) => ({
@@ -31,14 +37,10 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
 
     private configureRouting() {
 
-        this.configureTinkeringRoutes({
-            "login": {
-                screen: Login,
-            },
-        });
+        this.configureTinkeringRoutes(routeConfiguration);
 
         this.configureTinkeringNavigation({
-            initialRouteName: "login",
+            initialRouteName: "loading",
             headerMode: "none",
         });
     }
@@ -80,5 +82,10 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
         this.bindConstructor(tinkeringRneSymbols.AuthenticationService, AuthenticationService);
         this.bindConstructorParameter(protocultureSymbols.EventBus, AuthenticationService, 0);
         this.bindConstructorParameter(protocultureSymbols.ApiConnections, AuthenticationService, 1);
+
+        this.makeInjectable(SessionService);
+        this.bindConstructor(tinkeringRneSymbols.SessionService, SessionService);
+        this.bindConstructorParameter(protocultureSymbols.EventBus, SessionService, 0);
+        this.bindConstructorParameter(protocultureSymbols.ApiConnections, SessionService, 1);
     }
 }

@@ -20,12 +20,12 @@ export type Props = ComponentProps & UsesEventBus;
 
 class LoginComponent extends React.PureComponent<Props> {
 
-    public componentDidMount() {
+    // public componentDidMount() {
 
-        this.props.eventBus.on("session.created", (identity) => {
-            alert(JSON.stringify(identity));
-        });
-    }
+    //     this.props.eventBus.on("identity.loaded", (identity) => {
+    //         alert(JSON.stringify(identity));
+    //     });
+    // }
 
     public render() {
 
