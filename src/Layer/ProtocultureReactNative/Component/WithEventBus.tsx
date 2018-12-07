@@ -11,5 +11,5 @@ export interface UsesEventBus {
 
 export function withEventBus<Props extends UsesEventBus>(componentType: React.ComponentType<Props>): React.ComponentType<Props> {
 
-    return reactInject(protocultureSymbols.EventBus, componentType);
+    return reactInject(protocultureSymbols.EventBus, "eventBus", componentType);
 }

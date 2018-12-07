@@ -14,7 +14,7 @@
     "appcenter": "^1.10.0",
     "appcenter-analytics": "^1.10.0",
     "appcenter-crashes": "^1.10.0",
-    "es6-symbol": "^3.1.1",
+    "core-js": "^2.6.0",
     "protoculture": "^2.0.92",
     "protoculture-react-form": "^1.0.11",
     "react": "16.6.1",

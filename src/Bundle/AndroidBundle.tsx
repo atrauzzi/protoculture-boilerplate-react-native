@@ -1,4 +1,4 @@
-import "es6-symbol/implement";
+import "core-js";
 import React from "react";
 import { Bundle } from "protoculture";
 import { ProtocultureReactNative } from "../Layer/ProtocultureReactNative/Component/ProtocultureReactNative";

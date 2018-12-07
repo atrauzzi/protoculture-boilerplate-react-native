@@ -9,7 +9,7 @@ import { TinkeringRneAppService, TinkeringRneAppState } from "../Service/Tinkeri
 
 interface ComponentProps {
 
-    tinkeringRneAppService: TinkeringRneAppService;
+    appService: TinkeringRneAppService;
 }
 
 export type Props = ComponentProps;
@@ -27,7 +27,7 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
 
     public async componentDidMount() {
 
-        this.setState(await this.props.tinkeringRneAppService.calculateState());
+        this.setState(await this.props.appService.calculateState());
     }
 
     public render() {
@@ -52,7 +52,7 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
                     ));
 
                     return <NavigationContainer 
-                        ref={(navigator: any) => this.props.tinkeringRneAppService.setNavigator(navigator)}
+                        ref={(navigator: any) => this.props.appService.setNavigator(navigator)}
                     />
                 }
             }
@@ -62,4 +62,4 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
     }
 }
 
-export const TinkeringRneApp = reactInject(tinkeringRneSymbols.AppService, TinkeringRneAppComponent);
+export const TinkeringRneApp = reactInject(tinkeringRneSymbols.AppService, "appService", TinkeringRneAppComponent);

@@ -1,5 +1,5 @@
 import { Login } from "../Component/Login";
-import { Home } from "../Component/Home";
+import { Main } from "../Component/Main";
 import { Loading } from "../Component/Loading";
 
 
@@ -10,7 +10,7 @@ export const routeConfiguration = {
     "login": {
         screen: Login,
     },
-    "home": {
-        screen: Home,
+    "main": {
+        screen: Main,
     },
 };

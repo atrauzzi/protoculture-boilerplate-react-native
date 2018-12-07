@@ -47,6 +47,6 @@ export class TinkeringRneAppService {
 
     public identityLoaded = async (identity: any) => {
 
-        this.navigate("home");
+        this.navigate("main");
     };
 }

@@ -28,8 +28,8 @@ class ProtocultureReactNativeComponent extends React.PureComponent<Props, State>
         };
     }
 
-    public componentDidMount() {
-
+    public async componentDidMount() {
+        
         this.state.bundle.run();
 
         this.state.bundle.container

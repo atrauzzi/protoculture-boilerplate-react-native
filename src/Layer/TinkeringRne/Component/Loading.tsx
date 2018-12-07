@@ -8,6 +8,7 @@ class LoadingComponent extends React.PureComponent {
 
         return <View 
             style={{
+                height: "100%",
                 backgroundColor: "#ffffff",
             }}
         />

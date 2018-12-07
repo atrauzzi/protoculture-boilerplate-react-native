@@ -6,9 +6,7 @@ class HomeComponent extends React.PureComponent {
 
     public render() {
 
-        return <Text>
-            Oh hi there Mr. Authenticated!
-        </Text>
+        return <Text>You're home!</Text>
     }
 }
 

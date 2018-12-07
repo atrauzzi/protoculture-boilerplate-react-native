@@ -7,25 +7,18 @@ import { SubmitButton } from "../../ProtocultureReactFormRne/Component/SubmitBut
 import { reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
 import { tinkeringRneSymbols } from "../Symbols";
 import { PasswordLogin } from "../Domain/PasswordLogin";
-import { withEventBus, UsesEventBus } from "../../ProtocultureReactNative/Component/WithEventBus";
+import { UsesEventBus } from "../../ProtocultureReactNative/Component/WithEventBus";
 import { AuthenticationService } from "../Service/AuthenticationService";
 
 
 interface ComponentProps {
 
-    tinkeringRneAuthenticationService: AuthenticationService;
+    authenticationService: AuthenticationService;
 }
 
 export type Props = ComponentProps & UsesEventBus;
 
 class LoginComponent extends React.PureComponent<Props> {
-
-    // public componentDidMount() {
-
-    //     this.props.eventBus.on("identity.loaded", (identity) => {
-    //         alert(JSON.stringify(identity));
-    //     });
-    // }
 
     public render() {
 
@@ -87,22 +80,29 @@ class LoginComponent extends React.PureComponent<Props> {
 
     private doPasswordLogin = async (passwordLogin: PasswordLogin) => {
        
-        await this.props.tinkeringRneAuthenticationService.login(passwordLogin);
+        try {
+
+            await this.props.authenticationService.login(passwordLogin);
+        }
+        catch (e) {
+            
+            alert("Invalid login.");
+        }
     }
 
     private doGoogleLogin = async () => {
 
-        const googleLogin = await this.props.tinkeringRneAuthenticationService.loginGoogle();
+        const googleLogin = await this.props.authenticationService.loginGoogle();
 
         console.log(googleLogin);
     };
 
     private doFacebookLogin = async () => {
 
-       const facebookLogin = await this.props.tinkeringRneAuthenticationService.loginFacebook();
+       const facebookLogin = await this.props.authenticationService.loginFacebook();
 
        console.log(facebookLogin);
     };
 }
 
-export const Login = reactInject(tinkeringRneSymbols.AuthenticationService, reactInject(tinkeringRneSymbols.AppService,withEventBus(LoginComponent)));
+export const Login = reactInject(tinkeringRneSymbols.AuthenticationService, "authenticationService", LoginComponent);

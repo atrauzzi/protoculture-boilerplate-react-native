@@ -21,25 +21,18 @@ export class AuthenticationService {
 
     public async login(passwordLogin: PasswordLogin) {
 
-        try {
+        const token = await this.apiConnections
+            .connection("oauth")
+            .call<Oauth2Response>("password-grant", {
+                data: {
+                    username: passwordLogin.usernameoremail,
+                    password: passwordLogin.password,
+                },
+            });
 
-            const token = await this.apiConnections
-                .connection("oauth")
-                .call<Oauth2Response>("password-grant", {
-                    data: {
-                        username: passwordLogin.usernameoremail,
-                        password: passwordLogin.password,
-                    },
-                });
+        await sensitiveInfo.setItem("oauth2.token", JSON.stringify(token), {});
 
-            await sensitiveInfo.setItem("oauth2.token", JSON.stringify(token), {});
-
-            this.eventBus.emit("token.loaded", token);
-        }
-        catch (error) {
-
-            console.error(error);
-        }
+        this.eventBus.emit("token.loaded", token);
     }
 
     public async loginGoogle() {
