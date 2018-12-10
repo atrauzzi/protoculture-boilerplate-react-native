@@ -5,4 +5,5 @@ declare module "react-navigation" {
     export const createDrawerNavigator: any;
     export const createAppContainer: any;
     export const NavigationActions: any;
+    export const StackActions: any;
 }

@@ -7,7 +7,7 @@ export class ProtocultureReactFormRneServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        defaultProtocultureReactFormRneConfiguration.forEach((configuration) => this.bundle.container
+        defaultProtocultureReactFormRneConfiguration.forEach((configuration: WrappingConfiguration) => this.bundle.container
             .bind<WrappingConfiguration>(protocultureReactFormRneSymbols.WrappingConfiguration)
             .toConstantValue(configuration));
     }

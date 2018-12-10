@@ -58,7 +58,7 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
             }
             </BundleConsumer>
             </AutoWrapperProvider>
-        )
+        );
     }
 }
 

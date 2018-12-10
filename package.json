@@ -15,6 +15,7 @@
     "appcenter-analytics": "^1.10.0",
     "appcenter-crashes": "^1.10.0",
     "core-js": "^2.6.0",
+    "native-base": "^2.8.1",
     "protoculture": "^2.0.92",
     "protoculture-react-form": "^1.0.11",
     "react": "16.6.1",
