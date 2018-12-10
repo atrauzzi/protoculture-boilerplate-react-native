@@ -80,4 +80,9 @@ export class AuthenticationService {
             this.eventBus.emit("token.missing");
         }
     };
+
+    public sessionDestroyed = async () => {
+
+        await sensitiveInfo.deleteItem("oauth2.token", {});
+    };
 }

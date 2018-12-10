@@ -1,13 +1,41 @@
 import React from "react";
-import { Text } from "react-native";
+import { reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
+import { Container, Content, Button, Text } from "native-base";
+import { tinkeringRneSymbols } from "../Symbols";
+import { UsesEventBus } from "../../ProtocultureReactNative/Component/WithEventBus";
+import { SessionService } from "../Service/SessionService";
 
 
-export class MenuComponent extends React.PureComponent {
+interface ComponentProps {
+
+    sessionService: SessionService;
+}
+
+export type Props = ComponentProps & UsesEventBus;
+
+export class MenuComponent extends React.PureComponent<Props> {
 
     public render() {
 
-        return <Text>Menu!</Text>
+        return <Container>
+            
+            <Content>
+                
+                <Button
+                    onPress={this.logout}
+                >
+                    <Text>Logout</Text>
+                </Button>
+
+            </Content>
+
+        </Container>
+    }
+
+    private logout = async () => {
+        
+        this.props.sessionService.end();
     }
 }
 
-export const Menu = MenuComponent;
+export const Menu = reactInject(tinkeringRneSymbols.SessionService, "sessionService", MenuComponent);

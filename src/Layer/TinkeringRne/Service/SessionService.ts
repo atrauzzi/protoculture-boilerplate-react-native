@@ -15,6 +15,11 @@ export class SessionService {
         this.apiConnections = apiConnections;
     }
 
+    public async end() {
+
+        this.eventBus.emit("session.destroyed");
+    }
+
     public tokenLoaded = async (token: Oauth2Response) => {
 
         const expiresAt = moment().add(token.expires_in);
@@ -34,6 +39,6 @@ export class SessionService {
             .connection("api")
             .call("identity");
 
-        this.eventBus.emit("identity.loaded", identity);
+        this.eventBus.emit("session.created", identity);
     };
 }

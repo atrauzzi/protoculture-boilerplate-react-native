@@ -24,9 +24,11 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
         this.configureServices();
 
         this.configureEventHandler("app.started", tinkeringRneSymbols.AuthenticationService);
+        this.configureEventHandler("session.destroyed", tinkeringRneSymbols.AuthenticationService);
         this.configureEventHandler("token.loaded", tinkeringRneSymbols.SessionService);
         this.configureEventHandler("token.missing", tinkeringRneSymbols.AppService);
-        this.configureEventHandler("identity.loaded", tinkeringRneSymbols.AppService);
+        this.configureEventHandler("session.created", tinkeringRneSymbols.AppService);
+        this.configureEventHandler("session.destroyed", tinkeringRneSymbols.AppService);
 
         this.bundle.container
             .bind<AutoWrapperConfiguration>(tinkeringRneSymbols.AutoWrapperConfiguration)

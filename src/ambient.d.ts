@@ -1,6 +1,7 @@
 
 
 declare module "react-navigation" {
+    export const createSwitchNavigator: any;
     export const createStackNavigator: any;
     export const createDrawerNavigator: any;
     export const createAppContainer: any;

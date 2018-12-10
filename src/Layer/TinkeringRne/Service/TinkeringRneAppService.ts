@@ -1,6 +1,6 @@
 import { AutoWrapperConfiguration } from "auto-wrapper";
 import { BackHandler } from "react-native";
-import { StackActions } from "react-navigation";
+import { StackActions, NavigationActions } from "react-navigation";
 
 
 export interface TinkeringRneAppState {
@@ -49,10 +49,20 @@ export class TinkeringRneAppService {
 
     public tokenMissing = async () => {
 
-        this.navigate("login");
+        this.navigator.dispatch(StackActions.reset({
+            index: 0,
+            key: null,
+            actions: [NavigationActions.navigate({ routeName: "login" })]
+        }));
+        // this.navigate("login");
     };
 
-    public identityLoaded = async (identity: any) => {
+    public sessionDestroyed = async (identity: any) => {
+       
+         this.navigate("login");
+    }
+
+    public sessionCreated = async (identity: any) => {
 
         this.navigate("main");
     };

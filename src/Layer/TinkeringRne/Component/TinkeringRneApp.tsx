@@ -1,10 +1,13 @@
 import _ from "lodash";
 import React from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import { BundleConsumer, reactInject } from "../../ProtocultureReactNative/Component/ReactInject";
 import { tinkeringRneSymbols } from "../Symbols";
 import { AutoWrapperProvider, AutoWrapperConfiguration } from "auto-wrapper";
 import { TinkeringRneAppService, TinkeringRneAppState } from "../Service/TinkeringRneAppService";
+import { Main } from "./Main";
+import { Login } from "./Login";
+import { Loading } from "./Loading";
 
 
 interface ComponentProps {
@@ -27,7 +30,7 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
 
     public async componentDidMount() {
 
-        this.setState(await this.props.appService.calculateState());
+        // this.setState(await this.props.appService.calculateState());
     }
 
     public render() {
@@ -43,12 +46,25 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
                         return null;
                     }
 
-                    const configuration = bundle.container.get(tinkeringRneSymbols.Configuration);
-                    const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
+                    // const configuration = bundle.container.get(tinkeringRneSymbols.Configuration);
+                    // const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
 
-                    const NavigationContainer = createAppContainer(createStackNavigator(
-                        routes.reduce((previous, current) => ({ ...previous, ...current }), {}),
-                        configuration
+                    const NavigationContainer = createAppContainer(createSwitchNavigator(
+                        {
+                            "loading": {
+                                screen: Loading,
+                            },
+                            "login": {
+                                screen: Login,
+                            },
+                            "main": {
+                                screen: Main,
+                            },
+                        },
+                        {
+                            initialRouteName: "loading",
+                            headerMode: "none",
+                        }
                     ));
 
                     return <NavigationContainer 
