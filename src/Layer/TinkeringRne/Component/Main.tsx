@@ -26,7 +26,7 @@ const AppStack = createStackNavigator(
     }
 );
 
-export const Main = createDrawerNavigator(
+export const Drawer = createDrawerNavigator(
     {
         "app": {
             screen: AppStack,
@@ -35,5 +35,17 @@ export const Main = createDrawerNavigator(
     {
         contentComponent: Menu,
         initialRouteName: "app",
+    }
+);
+
+export const Main = createStackNavigator(
+    {
+        "drawer": {
+            screen: Drawer,
+        },
+        // todo: Modal screens will go here.
+    },
+    {
+        headerMode: "none",
     }
 );
