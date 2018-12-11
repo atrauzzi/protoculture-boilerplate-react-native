@@ -30,7 +30,7 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
 
     public async componentDidMount() {
 
-        // this.setState(await this.props.appService.calculateState());
+        this.setState(await this.props.appService.calculateState());
     }
 
     public render() {
@@ -45,9 +45,6 @@ class TinkeringRneAppComponent extends React.PureComponent<Props, TinkeringRneAp
 
                         return null;
                     }
-
-                    // const configuration = bundle.container.get(tinkeringRneSymbols.Configuration);
-                    // const routes = bundle.container.getAll(tinkeringRneSymbols.Route);
 
                     const NavigationContainer = createAppContainer(createSwitchNavigator(
                         {

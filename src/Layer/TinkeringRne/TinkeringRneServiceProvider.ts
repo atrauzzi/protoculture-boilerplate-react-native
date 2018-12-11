@@ -10,7 +10,6 @@ import { reactNativeSymbols } from "../ProtocultureReactNative/Symbols";
 import { NativeConfig } from "react-native-config";
 import { apiConfiguration, oauthConfiguration } from "./Configuration/ApiConfiguration";
 import { AuthenticationService } from "./Service/AuthenticationService";
-import { routeConfiguration } from "./Configuration/RouteConfiguration";
 import { SessionService } from "./Service/SessionService";
 
 
@@ -19,7 +18,6 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
     public async boot() {
 
         this.configureReactNativeRoot(TinkeringRneApp);
-        this.configureRouting();
         this.configureConnections();
         this.configureServices();
 
@@ -35,16 +33,6 @@ export class TinkeringRneServiceProvider extends ServiceProvider {
             .toDynamicValue((context) => ({
                 wrappers: context.container.getAll<WrappingConfiguration>(protocultureReactFormRneSymbols.WrappingConfiguration),
             }));
-    }
-
-    private configureRouting() {
-
-        this.configureTinkeringRoutes(routeConfiguration);
-
-        this.configureTinkeringNavigation({
-            initialRouteName: "loading",
-            headerMode: "none",
-        });
     }
 
     private configureConnections() {

@@ -1,6 +1,6 @@
 import { AutoWrapperConfiguration } from "auto-wrapper";
 import { BackHandler } from "react-native";
-import { StackActions, NavigationActions } from "react-navigation";
+import { StackActions, NavigationActions, DrawerActions } from "react-navigation";
 
 
 export interface TinkeringRneAppState {
@@ -35,32 +35,34 @@ export class TinkeringRneAppService {
         };
     }
 
-    public navigate(routeName: string) {
-
-        if (!this.navigator) {
-
-            throw Error("Navigator not available.");
-        }
+    public replace(routeName: string) {
 
         this.navigator.dispatch(StackActions.replace({
             routeName,
         }));
     }
 
+    public navigate(routeName: string) {
+
+        this.navigator.dispatch(NavigationActions.navigate({ 
+            routeName,
+        }));
+    }
+
+    public toggleMenu() {
+
+        this.navigator.dispatch(DrawerActions.toggleDrawer());
+    }
+
     public tokenMissing = async () => {
 
-        this.navigator.dispatch(StackActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.navigate({ routeName: "login" })]
-        }));
-        // this.navigate("login");
+        this.navigate("login");
     };
 
     public sessionDestroyed = async (identity: any) => {
        
-         this.navigate("login");
-    }
+        this.navigate("login");
+    };
 
     public sessionCreated = async (identity: any) => {
 

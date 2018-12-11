@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 
 class LoadingComponent extends React.PureComponent {
@@ -11,7 +11,9 @@ class LoadingComponent extends React.PureComponent {
                 height: "100%",
                 backgroundColor: "#ffffff",
             }}
-        />
+        >
+            {/* <Text>Loading...</Text> */}
+        </View>
     }
 }
 
